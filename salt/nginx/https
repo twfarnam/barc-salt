@@ -1,0 +1,26 @@
+
+server {
+  listen 443;
+  listen [::]:443;
+
+  server_name barc-service.tk;
+
+  location / { try_files $uri @barc; }
+  location @barc {
+      include uwsgi_params;
+      uwsgi_pass unix:/tmp/barc.sock;
+  }
+
+  ssl on;
+  ssl_certificate /etc/letsencrypt/live/barc-service.tk/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/barc-service.tk/privkey.pem;
+  ssl_session_timeout 5m;
+
+  ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+  ssl_prefer_server_ciphers on;
+
+}
+
+
+

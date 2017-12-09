@@ -68,8 +68,8 @@ certbot:
     - unless: test -x /var/www/lets-encrypt/.well-known/acme-challenge
 
   cmd.run:
-    - name: /opt/certbot/certbot-auto certonly -n --webroot -w /var/www/lets-encrypt --agree-tos --expand --email twfarnam@gmail.com -d barc-service.tk
-    - unless: test -x /etc/letsencrypt/live/barc-service.tk/
+    - name: /opt/certbot/certbot-auto certonly -n --webroot -w /var/www/lets-encrypt --agree-tos --expand --email twfarnam@gmail.com -d barc.squids.online 
+    - unless: test -x /etc/letsencrypt/live/barc.squids.online/
     - depends: nginx
 
   cron.present:

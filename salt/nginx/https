@@ -3,17 +3,28 @@ server {
   listen 443;
   listen [::]:443;
 
-  server_name barc-service.tk;
+  server_name barc.squids.online;
 
-  location / { try_files $uri @barc; }
+  location / {
+    try_files $uri @barc;
+  }
+
   location @barc {
       include uwsgi_params;
       uwsgi_pass unix:/tmp/barc.sock;
   }
 
+  location /static/ {
+    alias /home/deploy/barc-service/static/;
+  } 
+  
+  location /images {
+    alias /home/deploy/barc-service/images/;
+  } 
+
   ssl on;
-  ssl_certificate /etc/letsencrypt/live/barc-service.tk/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/barc-service.tk/privkey.pem;
+  ssl_certificate /etc/letsencrypt/live/barc.squids.online/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/barc.squids.online/privkey.pem;
   ssl_session_timeout 5m;
 
   ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;

@@ -10,14 +10,14 @@ Install salt package repo (https://repo.saltstack.com/#ubuntu):
 
 Prepend to /etc/salt/minion:
 
-  file_client: local
-  id: barc
-  file_roots:
-    base:
-      - /srv/saltstack/salt
-  pillar_roots:
-    base:
-      - /srv/saltstack/pillar
+    file_client: local
+    id: barc
+    file_roots:
+      base:
+        - /srv/saltstack/salt
+    pillar_roots:
+      base:
+        - /srv/saltstack/pillar
 
 Apply masterless salt:
 

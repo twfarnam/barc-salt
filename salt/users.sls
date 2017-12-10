@@ -2,14 +2,14 @@
 # user
 deploy:
   group.present:
-    - gid: 1001
+    - gid: 4001
     - system: True
   user.present:
     - shell: /bin/bash
     - home: /home/deploy
     - empty_password: True
-    - uid: 1000
-    - gid: 1001
+    - uid: 4001
+    - gid: 4001
     - groups:
       - sudo
 
@@ -42,7 +42,7 @@ deploy:
 /etc/sudoers.d:
   file.directory:
     - clean: True
-    - exclude_pat: 'E@(README)|(sudo_group_no_password_sudo)'
+    - exclude_pat: 'E@(README)|(sudo_group_no_password_sudo)|(google_sudoers)'
 
 # Allow sudoers to sudo without passwords.
 /etc/sudoers.d/sudo_group_no_password_sudo:

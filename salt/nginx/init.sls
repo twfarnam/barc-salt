@@ -4,17 +4,20 @@ nginx_repo:
   pkgrepo.managed:
     - ppa: nginx/stable
 
-
 nginx:
   pkg:
     - installed
     - require:
       - pkgrepo: nginx_repo
+
+restart_nginx:
   service.running:
+    - name: nginx
     - Reload: true
-    - watch:
+    - require:
       - pkg: nginx
       - file: http
+    - watch:
       - file: https
 
 nginx clean:
@@ -32,9 +35,6 @@ http:
     - mode: 644
 
 https:
-  require:
-    - cmd.run: certbot
-
   file.managed:
     - name: /etc/nginx/sites-enabled/https
     - source: salt://nginx/https
@@ -42,12 +42,12 @@ https:
     - user: root
     - group: root
     - mode: 644
+    - require:
+      - cmd: certbot
+
 
 
 certbot:
-  require:
-    - service: nginx
-    - file: http
 
   pkg:
     - name: git
@@ -70,7 +70,6 @@ certbot:
   cmd.run:
     - name: /opt/certbot/certbot-auto certonly -n --webroot -w /var/www/lets-encrypt --agree-tos --expand --email twfarnam@gmail.com -d barc.squids.online 
     - unless: test -x /etc/letsencrypt/live/barc.squids.online/
-    - depends: nginx
 
   cron.present:
     - name: /opt/certbot/certbot-auto renew && /etc/init.d/nginx reload

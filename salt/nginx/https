@@ -10,8 +10,7 @@ server {
   }
 
   location @barc {
-      include uwsgi_params;
-      uwsgi_pass unix:/tmp/barc.sock;
+      proxy_pass http://127.0.0.1:5000;
   }
 
   location /static/ {

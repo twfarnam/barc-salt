@@ -16,8 +16,8 @@ server {
   location /static/ {
     alias /home/deploy/barc-service/static/;
   } 
-  
-  location /images {
+
+  location /static/images/ {
     alias /home/deploy/barc-service/images/;
   } 
 
